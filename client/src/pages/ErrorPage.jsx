@@ -1,4 +1,7 @@
-function ErrorPage({ code, message }) {
+function ErrorPage({
+  code = 500,
+  message = "Ha ocurrido un error inesperado.",
+}) {
   return (
     <div className="container-fluid d-flex flex-column align-items-center justify-content-center vh-100 bg-light">
       <div className="text-center p-5 border rounded shadow-sm bg-white">
