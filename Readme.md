@@ -1,41 +1,21 @@
 # MentalSync
 
-## Usuarios de prueba
-
-| Rol       | Correo            | Pass |
-| --------- | ----------------- | ---- |
-| Admin     | admin@test.com    | test |
-| Paciente  | paciente@test.com | test |
-| Psicologo | psico@test.com    | test |
-
 ### Cómo levantar el proyecto localmente
 
 1. Primero instala todas las dependencias ejecutando el comando:
+   
    ```bash
    npm run install-all
    ```
 
-1. Luego, dirígete a la carpeta principal del código fuente. Puedes hacerlo ejecutando en la misma terminal abierta, el siguiente comando:
-
-   ```bash
-   cd ..
-   ```
-
-   En la carpeta principal del código fuente, ejecuta en la terminal el siguiente comando:
-
-   ```bash
-   npm run start
-   ```
-
-   Con ello, se ejecutará el servidor local para el backend. Recuerda tener configurado el archivo _.env_
-
-   Si quieres ejecutar el servidor y que este se actualice automaticamente con cada cambio realizado, ejecuta el siguiente comando en lugar del anterior:
+1. Luego, para poder correr el servidor, ejecuta el siguiento comando en la raíz del proyecto:
 
    ```bash
    npm run dev
    ```
 
-1. En la carpeta client, a la que puedes desplazarte otra vez, con el comando:
+1. Una vez hecho esto inicia otra terminal para ejecutar el cliente y dejas que el terminal del servidor siga ejecutandose:
+   En la nueva terminal nos dirigiendonos a la carpeta 'client' con el comando:
 
    ```bash
    cd client
@@ -47,7 +27,15 @@
    npm run dev
    ```
 
-   Con ello, se ejecutará el servidor local para el frontend.
+   Con ello, se ejecutará la vista del cliente.
 
 1. Dirígete al al servidor local ingresando el siguiente link en tu navegador: http://localhost:5173/
 
+### Usuarios de prueba
+   Para probar el sistema, usa alguna de estas cuentas con las 3 vistas por tipo de cliente:
+
+| Rol       | Correo            | Pass |
+| --------- | ----------------- | ---- |
+| Admin     | admin@test.com    | test |
+| Paciente  | paciente@test.com | test |
+| Psicologo | psico@test.com    | test |
