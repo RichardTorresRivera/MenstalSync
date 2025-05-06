@@ -1,4 +1,5 @@
 import db from "../src/db/postgres.js";
+import { findPsicologosPaciente } from "../models/psicologo.models.js";
 
 export const createPsicologo = async (req, res, next) => {
   try {
@@ -66,31 +67,35 @@ export const createPsicologo = async (req, res, next) => {
 
 export const getPsicologosPaciente = async (req, res, next) => {
   try {
-    const result = await db.any(
-      `SELECT p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online,
-              json_agg(DISTINCT jsonb_build_object('nombre', e.nombre)) AS especialidades
-       FROM psicologo p
-       INNER JOIN horario h ON p.idpsicologo = h.idpsicologo
-       LEFT JOIN especialidad_psicologo ep ON p.idpsicologo = ep.idpsicologo
-       LEFT JOIN especialidad e ON ep.idespecialidad = e.idespecialidad
-       GROUP BY p.idpsicologo, p.nombre, p.apellidop, p.apellidom, p.dni, p.foto, p.descripcion, p.consulta_online`
-    );
+    const {
+      nombre,
+      consulta_online,
+      especialidad_id,
+      limit = 10,
+      page = 1,
+    } = req.query;
 
-    const psicologos = result.map((row) => ({
-      idpsicologo: row.idpsicologo,
-      nombre: row.nombre,
-      apellidop: row.apellidop,
-      apellidom: row.apellidom,
-      dni: row.dni,
-      foto: row.foto,
-      descripcion: row.descripcion,
-      consulta_online: row.consulta_online,
-      especialidades: row.especialidades.filter(
-        (especialidad) => especialidad.nombre !== null
-      ),
-    }));
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+    const offset = (pageNumber - 1) * limitNumber;
 
-    res.json(psicologos);
+    const { data, total } = await findPsicologosPaciente({
+      nombre,
+      consulta_online,
+      especialidad_id,
+      limit: limitNumber,
+      offset,
+    });
+
+    const totalPages = Math.ceil(total / limitNumber);
+
+    res.status(200).json({
+      data,
+      total,
+      page: pageNumber,
+      limit: limitNumber,
+      totalPages,
+    });
   } catch (error) {
     next(error);
   }
